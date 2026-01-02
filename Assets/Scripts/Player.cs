@@ -7,21 +7,20 @@ public class Player : MonoBehaviour
     [SerializeField] private float playerMovementSpeed;
     [SerializeField] private float playerRunningSpeed;
     [SerializeField] private Transform cameraPivot;
-    [SerializeField] private float sensitivity;
+    [SerializeField] private float xSensitivity;
     [SerializeField] private float ySensitivity;
     [SerializeField] private LayerMask weaponLayer;
     [SerializeField] private Transform weaponHolderTransform;
     [SerializeField] private Transform cameraPivotTransform;
     
     private Vector2 playerMoveInputVector;
-    private Vector3 playerMoveInputVector3D;
+    private Vector3 playerMoveInputDirection;
     private Vector2 playerLookInputVector;
     private Rigidbody playerRigidbody;
     private readonly float topClamp = 90f;
     private readonly float bottomClamp = -90f;
     private float xRotation = 0f;
     private float yRotation = 0f;
-    private readonly float threshold = 0.1f;
     private readonly float weaponInteractionDistance = 3f;
 
     private void Awake()
@@ -60,10 +59,9 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         playerMoveInputVector = GameInputs.Instance.GetMoveInputVector();
-        if(playerMoveInputVector.sqrMagnitude < threshold) return;
         float speed = GameInputs.Instance.IsSprintPressed() ? playerRunningSpeed : playerMovementSpeed;
-        playerMoveInputVector3D = transform.right*playerMoveInputVector.x + transform.forward*playerMoveInputVector.y;
-        playerRigidbody.AddForce(playerMoveInputVector3D.normalized * (speed ));
+        playerMoveInputDirection = transform.right*playerMoveInputVector.x + transform.forward*playerMoveInputVector.y;
+        playerRigidbody.AddForce(playerMoveInputDirection.normalized * speed );
     }
 
     private void HandleCameraMovement()
@@ -83,9 +81,8 @@ public class Player : MonoBehaviour
     private void ReadInput()
     {
         playerLookInputVector = GameInputs.Instance.GetLookInputVector();
-        if (!(playerLookInputVector.sqrMagnitude > threshold)) return;
         float lookInputY = playerLookInputVector.y* ySensitivity;
-        float lookInputX = playerLookInputVector.x* sensitivity;
+        float lookInputX = playerLookInputVector.x* xSensitivity;
         xRotation -= lookInputY ;
         xRotation = Mathf.Clamp(xRotation, bottomClamp, topClamp);
         yRotation = lookInputX ;

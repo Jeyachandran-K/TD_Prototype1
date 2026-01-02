@@ -9,6 +9,7 @@ public class GameInputs : MonoBehaviour
     private InputActions inputActions;
     private Vector2 moveInputVector;
     private Vector2 lookInputVector;
+    private readonly float threshold = 0.1f;
     private void Awake()
     {
         Instance = this;
@@ -32,11 +33,19 @@ public class GameInputs : MonoBehaviour
     }
     public Vector2 GetMoveInputVector()
     {
+        if (moveInputVector.sqrMagnitude <= threshold)
+        {
+            moveInputVector = Vector2.zero;
+        }
         return moveInputVector;
     }
 
     public Vector2 GetLookInputVector()
     {
+        if (lookInputVector.sqrMagnitude <= threshold)
+        {
+            lookInputVector = Vector2.zero;
+        }
         return lookInputVector;
     }
 
