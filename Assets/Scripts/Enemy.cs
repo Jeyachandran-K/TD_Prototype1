@@ -26,13 +26,11 @@ public class Enemy : MonoBehaviour
 
     private void DetectPlayerInRange()
     {
-        if(playerTransform == null) return;
-        float distance  = Vector3.Distance(transform.position, playerTransform.position);
-        if (distance <= playerDetectionRange)
-        {
-            Vector3 direction = (playerTransform.position - transform.position).normalized;
-            enemyRigidbody.MovePosition(enemyRigidbody.position + direction * (enemyMovementSpeed * Time.fixedDeltaTime));
-            transform.LookAt(playerTransform);
-        }
+        if(!playerTransform) return;
+        float playerDistance  = Vector3.Distance(transform.position, playerTransform.position);
+        if (playerDistance > playerDetectionRange) return;
+        Vector3 direction = (playerTransform.position - transform.position).normalized;
+        enemyRigidbody.MovePosition(enemyRigidbody.position + direction * (enemyMovementSpeed * Time.fixedDeltaTime));
+        transform.LookAt(playerTransform);
     }
 }
