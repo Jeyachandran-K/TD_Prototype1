@@ -3,6 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float playerMovementSpeed;
+    [SerializeField] private float playerRunningSpeed;
     [SerializeField] private Transform cameraPivot;
     [SerializeField] private float sensitivity;
     
@@ -10,9 +11,10 @@ public class Player : MonoBehaviour
     private Vector3 playerMoveInputVector3D;
     private Vector2 playerLookInputVector;
     private Rigidbody playerRigidbody;
-    private float topClamp = 90f;
-    private float bottomClamp = -90f;
+    private readonly float topClamp = 90f;
+    private readonly float bottomClamp = -90f;
     private float xRotation = 0f;
+    private readonly float threshold = 0.1f;
 
     private void Awake()
     {
@@ -37,15 +39,16 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         playerMoveInputVector = GameInputs.Instance.GetMoveInputVector();
-        if(playerMoveInputVector.sqrMagnitude < 0.01f) return;
+        if(playerMoveInputVector.sqrMagnitude < threshold) return;
+        float speed = GameInputs.Instance.IsSprintPressed() ? playerRunningSpeed : playerMovementSpeed;
         playerMoveInputVector3D = transform.right*playerMoveInputVector.x + transform.forward*playerMoveInputVector.y;
-        playerRigidbody.AddForce(playerMoveInputVector3D.normalized * (playerMovementSpeed * Time.deltaTime));
+        playerRigidbody.AddForce(playerMoveInputVector3D.normalized * (speed * Time.deltaTime));
     }
 
     private void HandleCameraMovement()
     {
         playerLookInputVector = GameInputs.Instance.GetLookInputVector();
-        if (!(playerLookInputVector.sqrMagnitude > 0.01f)) return;
+        if (!(playerLookInputVector.sqrMagnitude > threshold)) return;
         float lookInputX = playerLookInputVector.x;
         float lookInputY = playerLookInputVector.y;
         transform.Rotate(Vector3.up * (lookInputX * sensitivity));

@@ -39,4 +39,9 @@ public class GameInputs : MonoBehaviour
     {
         return lookInputVector;
     }
+
+    public bool IsSprintPressed()
+    {
+        return inputActions.Player.Sprint.IsPressed();
+    }
 }
