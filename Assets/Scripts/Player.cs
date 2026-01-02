@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float playerRunningSpeed;
     [SerializeField] private Transform cameraPivot;
     [SerializeField] private float sensitivity;
+    [SerializeField] private float ySensitivity;
     [SerializeField] private LayerMask weaponLayer;
     [SerializeField] private Transform weaponHolderTransform;
     [SerializeField] private Transform cameraPivotTransform;
@@ -18,8 +20,9 @@ public class Player : MonoBehaviour
     private readonly float topClamp = 90f;
     private readonly float bottomClamp = -90f;
     private float xRotation = 0f;
+    private float yRotation = 0f;
     private readonly float threshold = 0.1f;
-    private float weaponInteractionDistance = 3f;
+    private readonly float weaponInteractionDistance = 3f;
 
     private void Awake()
     {
@@ -33,7 +36,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        HandleMovement();
+        ReadInput();
         WeaponPickup();
     }
 
@@ -41,39 +44,50 @@ public class Player : MonoBehaviour
     {
         HandleCameraMovement();
     }
+    private void FixedUpdate()
+    {
+        HandleMovement();
+        HandleRotation();
+    }
 
+    private void HandleRotation()
+    {
+        Quaternion delta = Quaternion.Euler(0,yRotation,0);
+        playerRigidbody.MoveRotation(playerRigidbody.rotation * delta);
+    }
+
+    
     private void HandleMovement()
     {
         playerMoveInputVector = GameInputs.Instance.GetMoveInputVector();
         if(playerMoveInputVector.sqrMagnitude < threshold) return;
         float speed = GameInputs.Instance.IsSprintPressed() ? playerRunningSpeed : playerMovementSpeed;
         playerMoveInputVector3D = transform.right*playerMoveInputVector.x + transform.forward*playerMoveInputVector.y;
-        playerRigidbody.AddForce(playerMoveInputVector3D.normalized * (speed * Time.deltaTime));
+        playerRigidbody.AddForce(playerMoveInputVector3D.normalized * (speed ));
     }
 
     private void HandleCameraMovement()
     {
-        playerLookInputVector = GameInputs.Instance.GetLookInputVector();
-        if (!(playerLookInputVector.sqrMagnitude > threshold)) return;
-        float lookInputX = playerLookInputVector.x* sensitivity;
-        float lookInputY = playerLookInputVector.y* sensitivity;
-        transform.Rotate(Vector3.up * (lookInputX ));
-        xRotation -= lookInputY ;
-        xRotation = Mathf.Clamp(xRotation, bottomClamp, topClamp);
-        
         cameraPivot.localRotation = Quaternion.Euler(xRotation, 0f,0f);
     }
 
     private void WeaponPickup()
     {
-        if (Physics.Raycast(cameraPivotTransform.position, cameraPivotTransform.forward, out RaycastHit hit,
-                weaponInteractionDistance,weaponLayer))
-        {
-            if (GameInputs.Instance.IsInteractPressed())
-            {
-                hit.transform.SetParent(weaponHolderTransform);
-                hit.transform.localRotation = Quaternion.Euler(45f, 0f, 0f);
-            }
-        }
+        if (!Physics.Raycast(cameraPivotTransform.position, cameraPivotTransform.forward, out RaycastHit hit,
+                weaponInteractionDistance, weaponLayer)) return;
+        if (!GameInputs.Instance.IsInteractPressed()) return;
+        hit.transform.SetParent(weaponHolderTransform);
+        hit.transform.localRotation = Quaternion.Euler(45f, 0f, 0f);
+    }
+
+    private void ReadInput()
+    {
+        playerLookInputVector = GameInputs.Instance.GetLookInputVector();
+        if (!(playerLookInputVector.sqrMagnitude > threshold)) return;
+        float lookInputY = playerLookInputVector.y* ySensitivity;
+        float lookInputX = playerLookInputVector.x* sensitivity;
+        xRotation -= lookInputY ;
+        xRotation = Mathf.Clamp(xRotation, bottomClamp, topClamp);
+        yRotation = lookInputX ;
     }
 }

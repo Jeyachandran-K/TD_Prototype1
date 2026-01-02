@@ -1011,10 +1011,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61deba37f7e3614390564d5569d8e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  playerMovementSpeed: 500
-  playerRunningSpeed: 1000
+  playerMovementSpeed: 1
+  playerRunningSpeed: 2
   cameraPivot: {fileID: 1107477067}
-  sensitivity: 0.75
+  sensitivity: 0.5
   weaponLayer:
     serializedVersion: 2
     m_Bits: 128
