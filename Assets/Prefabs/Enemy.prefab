@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2232432072207138977}
   - component: {fileID: 5639312633468962372}
   - component: {fileID: 5538516537684050700}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,11 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43afa668e459ea1419671a20f1653f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  maxDistance: 5
   enemyMovementSpeed: 1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
   playerDetectionRange: 10
 --- !u!1 &2805664429833455044
 GameObject:
@@ -115,7 +111,7 @@ GameObject:
   - component: {fileID: 1641526570772717459}
   - component: {fileID: 6320298726791777059}
   - component: {fileID: 924709193352402258}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyEyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +201,7 @@ GameObject:
   - component: {fileID: 2671319135615411225}
   - component: {fileID: 5324798902464911145}
   - component: {fileID: 9196154929025897065}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}

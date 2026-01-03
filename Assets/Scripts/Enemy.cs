@@ -33,4 +33,9 @@ public class Enemy : MonoBehaviour
         enemyRigidbody.MovePosition(enemyRigidbody.position + direction * (enemyMovementSpeed * Time.fixedDeltaTime));
         transform.LookAt(playerTransform);
     }
+
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
 }

@@ -57,4 +57,9 @@ public class GameInputs : MonoBehaviour
     {
         return inputActions.Player.Interact.IsPressed();
     }
+
+    public bool IsAttackPressed()
+    {
+        return inputActions.Player.Attack.WasPressedThisFrame();
+    }
 }
