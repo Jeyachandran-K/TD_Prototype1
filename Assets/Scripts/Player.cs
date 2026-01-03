@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         playerMoveInputVector = GameInputs.Instance.GetMoveInputVector();
+        
         float acceleration = GameInputs.Instance.IsSprintPressed() ? playerRunningSpeed : playerMovementSpeed;
         playerMoveInputDirection = transform.right*playerMoveInputVector.x + transform.forward*playerMoveInputVector.y;
         playerRigidbody.AddForce(playerMoveInputDirection.normalized * acceleration,ForceMode.Force );
@@ -72,11 +73,17 @@ public class Player : MonoBehaviour
 
     private void WeaponPickup()
     {
-        if (!Physics.Raycast(cameraPivotTransform.position, cameraPivotTransform.forward, out RaycastHit hit,
-                weaponInteractionDistance, weaponLayer)) return;
-        if (!GameInputs.Instance.IsInteractPressed()) return;
-        hit.transform.SetParent(weaponHolderTransform);
-        hit.transform.localRotation = Quaternion.Euler(45f, 0f, 0f);
+        if (Physics.Raycast(cameraPivotTransform.position, cameraPivotTransform.forward, out RaycastHit hit,
+                weaponInteractionDistance, weaponLayer))
+        {
+            Debug.Log("Player sees weapon");
+            if (GameInputs.Instance.IsInteractPressed())
+            {
+                hit.transform.SetParent(weaponHolderTransform);
+                hit.transform.localPosition = Vector3.zero;
+                hit.transform.localRotation = Quaternion.Euler(15f, 0f, 0f);
+            }
+        }
     }
 
     private void ReadInput()
