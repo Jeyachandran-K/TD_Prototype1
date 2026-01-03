@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        playerLookInputVector = Vector2.zero;
     }
     private void Update()
     {
@@ -59,9 +60,9 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         playerMoveInputVector = GameInputs.Instance.GetMoveInputVector();
-        float speed = GameInputs.Instance.IsSprintPressed() ? playerRunningSpeed : playerMovementSpeed;
+        float acceleration = GameInputs.Instance.IsSprintPressed() ? playerRunningSpeed : playerMovementSpeed;
         playerMoveInputDirection = transform.right*playerMoveInputVector.x + transform.forward*playerMoveInputVector.y;
-        playerRigidbody.AddForce(playerMoveInputDirection.normalized * speed );
+        playerRigidbody.AddForce(playerMoveInputDirection.normalized * acceleration,ForceMode.Force );
     }
 
     private void HandleCameraMovement()
