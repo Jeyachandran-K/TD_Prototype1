@@ -1,4 +1,4 @@
-using System;
+
 using UnityEngine;
 
 public class StickWeapon : MonoBehaviour
@@ -14,7 +14,6 @@ public class StickWeapon : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
             Vector3 hitDir = collision.contacts[0].normal * -1f;

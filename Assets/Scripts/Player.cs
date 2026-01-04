@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
             {
                 hit.transform.SetParent(weaponHolderTransform);
                 hit.transform.localPosition = Vector3.zero;
-                hit.transform.localRotation = Quaternion.Euler(15f, 0f, 0f);
+                hit.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
     }
