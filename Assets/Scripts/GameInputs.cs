@@ -62,4 +62,9 @@ public class GameInputs : MonoBehaviour
     {
         return inputActions.Player.Attack.WasPressedThisFrame();
     }
+
+    public bool IsHeavyAttackPressed()
+    {
+        return inputActions.Player.HeavyAttack.WasPressedThisFrame();
+    }
 }

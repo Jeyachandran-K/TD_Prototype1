@@ -3,9 +3,18 @@ using UnityEngine;
 
 public class StickWeapon : MonoBehaviour
 {
+    public enum Attacktype
+    {
+        Normal,
+        Heavy
+    }
+    
     [SerializeField] private float hitForce;
     private Rigidbody stickWeaponRigidbody;
     private float damageAmount = 10f;
+    // private float heavyAttackDamageAmount = 20f;
+    
+    private Attacktype attacktype;
 
     private void Awake()
     {

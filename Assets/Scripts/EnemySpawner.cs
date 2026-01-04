@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform rightEnemySpawner;
     [SerializeField] private Transform enemyTargetTransform;
     
-    private readonly float spawnInterval = 2f;
+    private readonly float spawnInterval = 3f;
     private float timer;
     private Vector3 direction;
 
