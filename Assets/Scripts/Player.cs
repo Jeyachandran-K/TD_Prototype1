@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
+    public static Player  Instance{get; private set;}
+    public event EventHandler OnPlayerDeath ;
+    
     [SerializeField] private float playerMovementSpeed;
     [SerializeField] private float playerRunningSpeed;
     [SerializeField] private Transform cameraPivot;
@@ -23,8 +25,17 @@ public class Player : MonoBehaviour
     private float yRotation = 0f;
     private readonly float weaponInteractionDistance = 3f;
 
+    public enum PlayerState
+    {
+        Alive,
+        Dead
+    }
+    
+    public PlayerState playerState = PlayerState.Alive;
+
     private void Awake()
     {
+        Instance = this;
         playerRigidbody = GetComponent<Rigidbody>();
     }
 
@@ -94,5 +105,14 @@ public class Player : MonoBehaviour
         xRotation -= lookInputY ;
         xRotation = Mathf.Clamp(xRotation, bottomClamp, topClamp);
         yRotation = lookInputX ;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Enemy enemy))
+        {
+            playerState = PlayerState.Dead;
+            OnPlayerDeath?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    
     private Transform playerTransform;
     private Rigidbody enemyRigidbody;
     private Vector3 direction;
+    private float health = 20f;
     
     [SerializeField] private float enemyMovementSpeed;
     [SerializeField] private float playerDetectionRange;
@@ -39,7 +41,7 @@ public class Enemy : MonoBehaviour
         transform.LookAt(playerTransform);
     }
 
-    public void MoveEnemy(Vector3 direction)
+    private void MoveEnemy(Vector3 direction)
     {
         enemyRigidbody.MovePosition(enemyRigidbody.position + direction * (enemyMovementSpeed * Time.fixedDeltaTime));
     }
@@ -49,5 +51,10 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+    public void ReduceHealth(float damageAmount)
+    {
+        health -= damageAmount;
+        if(health <= 0) DestroySelf();
+    }
+
 }

@@ -5,6 +5,7 @@ public class StickWeapon : MonoBehaviour
 {
     [SerializeField] private float hitForce;
     private Rigidbody stickWeaponRigidbody;
+    private float damageAmount = 10f;
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class StickWeapon : MonoBehaviour
         {
             Vector3 hitDir = collision.contacts[0].normal * -1f;
             collision.rigidbody.AddForce(hitDir * hitForce, ForceMode.Impulse);
+            enemy.ReduceHealth(damageAmount);
         }
     }
 }
