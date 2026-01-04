@@ -10,13 +10,20 @@ public class EnemySpawner : MonoBehaviour
     
     private readonly float spawnInterval = 2f;
     private float timer;
+    private Vector3 direction;
 
+    private void Start()
+    {
+        SpawnEnemy(leftEnemySpawner,90);
+        SpawnEnemy(rightEnemySpawner,270);
+    }
     private void Update()
     {
         if (timer >= spawnInterval)
         {
             timer = 0;
-            SpawnEnemy(leftEnemySpawner);
+            SpawnEnemy(leftEnemySpawner,90);
+            SpawnEnemy(rightEnemySpawner,270);
             // SpawnEnemy(rightEnemySpawner);
         }
         else
@@ -25,19 +32,12 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy(Transform spawnPoint)
+    private void SpawnEnemy(Transform spawnPoint,float rotation)
     {
-        GameObject spawnedEnemy = Instantiate(enemyPrefab,spawnPoint.position, Quaternion.identity);
-        
-        Vector3 direction = (enemyTargetTransform.position - spawnedEnemy.transform.position).normalized;
-        MoveSpawnedEnemy(spawnedEnemy, direction);
-    }
-
-    private void MoveSpawnedEnemy(GameObject spawnedEnemy,Vector3 direction)
-    {
+        GameObject spawnedEnemy = Instantiate(enemyPrefab,spawnPoint.position, Quaternion.Euler(0f,rotation,0f));
         Enemy enemy = spawnedEnemy.GetComponent<Enemy>();
-        enemy.GetEnemyRigidbody().MovePosition(enemy.GetEnemyRigidbody().position + direction * ((enemy.GetEnemyMovementSpeed()) * Time.deltaTime));
-        // enemy.MoveEnemy(direction);
+        Vector3 direction = (enemyTargetTransform.position - spawnedEnemy.transform.position).normalized;
+        enemy.SetDirection(direction);
     }
     
 }

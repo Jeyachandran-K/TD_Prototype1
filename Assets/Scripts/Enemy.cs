@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
 {
     private Transform playerTransform;
     private Rigidbody enemyRigidbody;
+    private Vector3 direction;
     
     [SerializeField] private float enemyMovementSpeed;
     [SerializeField] private float playerDetectionRange;
@@ -21,6 +22,11 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         DetectPlayerInRange();
+        MoveEnemy(direction);
+    }
+    public void SetDirection(Vector3 direction)
+    {
+        this.direction = direction;
     }
     
 
@@ -29,8 +35,7 @@ public class Enemy : MonoBehaviour
         if(!playerTransform) return;
         float playerDistance  = Vector3.Distance(transform.position, playerTransform.position);
         if (playerDistance > playerDetectionRange) return;
-        Vector3 direction = (playerTransform.position - transform.position).normalized;
-        MoveEnemy(direction);
+        direction = (playerTransform.position - transform.position).normalized;
         transform.LookAt(playerTransform);
     }
 
@@ -39,18 +44,10 @@ public class Enemy : MonoBehaviour
         enemyRigidbody.MovePosition(enemyRigidbody.position + direction * (enemyMovementSpeed * Time.fixedDeltaTime));
     }
     
-    public Rigidbody GetEnemyRigidbody()
-    {
-        return enemyRigidbody;
-    }
-
     public void DestroySelf()
     {
         Destroy(gameObject);
     }
 
-    public float GetEnemyMovementSpeed()
-    {
-        return enemyMovementSpeed;
-    }
+    
 }
