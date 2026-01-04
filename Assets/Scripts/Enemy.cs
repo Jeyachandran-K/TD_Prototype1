@@ -30,12 +30,27 @@ public class Enemy : MonoBehaviour
         float playerDistance  = Vector3.Distance(transform.position, playerTransform.position);
         if (playerDistance > playerDetectionRange) return;
         Vector3 direction = (playerTransform.position - transform.position).normalized;
-        enemyRigidbody.MovePosition(enemyRigidbody.position + direction * (enemyMovementSpeed * Time.fixedDeltaTime));
+        MoveEnemy(direction);
         transform.LookAt(playerTransform);
+    }
+
+    public void MoveEnemy(Vector3 direction)
+    {
+        enemyRigidbody.MovePosition(enemyRigidbody.position + direction * (enemyMovementSpeed * Time.fixedDeltaTime));
+    }
+    
+    public Rigidbody GetEnemyRigidbody()
+    {
+        return enemyRigidbody;
     }
 
     public void DestroySelf()
     {
         Destroy(gameObject);
+    }
+
+    public float GetEnemyMovementSpeed()
+    {
+        return enemyMovementSpeed;
     }
 }
