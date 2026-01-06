@@ -45,6 +45,14 @@ public class StickWeapon : MonoBehaviour
             collision.rigidbody.AddForce(hitDir * hitForce, ForceMode.Impulse);
             enemy.ReduceHealth(damageAmount);
         }
+        if (collision.gameObject.TryGetComponent(out EnemyTank enemyTank))
+        {
+            if (attackType == AttackType.Normal) damageAmount = normalAttackDamage;
+            if (attackType == AttackType.Heavy) damageAmount = heavyAttackDamageAmount;
+            Vector3 hitDir = collision.contacts[0].normal * -1f;
+            collision.rigidbody.AddForce(hitDir * hitForce, ForceMode.Impulse);
+            enemyTank.ReduceHealth(damageAmount);
+        }
     }
     
 }

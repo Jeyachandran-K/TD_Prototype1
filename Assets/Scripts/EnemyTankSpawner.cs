@@ -1,29 +1,25 @@
-
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemyTankSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private Transform leftEnemySpawner;
-    [SerializeField] private Transform rightEnemySpawner;
+    [SerializeField] private Transform enemyTankSpawnPoint;
     [SerializeField] private Transform enemyTargetTransform;
     
-    private readonly float spawnInterval = 3f;
+    private readonly float spawnInterval = 5f;
     private float timer;
     private Vector3 direction;
 
     private void Start()
     {
-        SpawnEnemy(leftEnemySpawner,90);
-        SpawnEnemy(rightEnemySpawner,270);
+        SpawnEnemy(enemyTankSpawnPoint,225);
     }
     private void Update()
     {
         if (timer >= spawnInterval)
         {
             timer = 0;
-            SpawnEnemy(leftEnemySpawner,90);
-            SpawnEnemy(rightEnemySpawner,270);
+            SpawnEnemy(enemyTankSpawnPoint,225);
         }
         else
         {
@@ -34,9 +30,9 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy(Transform spawnPoint,float rotation)
     {
         GameObject spawnedEnemy = Instantiate(enemyPrefab,spawnPoint.position, Quaternion.Euler(0f,rotation,0f));
-        Enemy enemy = spawnedEnemy.GetComponent<Enemy>();
+        EnemyTank enemyTank = spawnedEnemy.GetComponent<EnemyTank>();
         Vector3 direction = (enemyTargetTransform.position - spawnedEnemy.transform.position).normalized;
-        enemy.SetDirection(direction);
+        enemyTank.SetDirection(direction);
     }
-    
+
 }

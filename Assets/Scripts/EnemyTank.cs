@@ -1,15 +1,14 @@
-
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyTank : MonoBehaviour
 {
     private Transform playerTransform;
     private Rigidbody enemyRigidbody;
     private Vector3 direction;
-    private float health = 20f;
+    private float health = 50f;
     
-    [SerializeField] private float enemyMovementSpeed = 2f;
-    [SerializeField] private float playerDetectionRange =30f;
+    [SerializeField] private float enemyMovementSpeed = 1f;
+    [SerializeField] private float playerDetectionRange = 30f;
 
     private void Awake()
     {
