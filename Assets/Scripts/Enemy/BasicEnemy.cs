@@ -8,11 +8,13 @@ public class BasicEnemy : MonoBehaviour,IEnemy
 
     protected Transform playerTransform;
     protected Rigidbody enemyRigidbody;
+    private float enemyHealth;
 
     private void Awake()
     {
         playerTransform= FindAnyObjectByType<Player>().transform;
         enemyRigidbody =  GetComponent<Rigidbody>();
+        enemyHealth = enemySO.health;
     }
 
     private void FixedUpdate()
@@ -22,7 +24,12 @@ public class BasicEnemy : MonoBehaviour,IEnemy
 
     public void TakeDamage(float damageAmount)
     {
-        
+        enemyHealth  -= damageAmount;
+        if (enemyHealth <= 0)
+        {
+            DestroySelf();
+            
+        }
     }
 
     public void MoveAlongWayPoints(Transform[] wayPoints)
