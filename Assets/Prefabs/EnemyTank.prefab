@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2269287861277091420, guid: 99332c2d0989bc24191fa43419300ec3, type: 3}
       propertyPath: m_Name
-      value: Enemy_Tank
+      value: EnemyTank
       objectReference: {fileID: 0}
     - target: {fileID: 6096300481173336584, guid: 99332c2d0989bc24191fa43419300ec3, type: 3}
       propertyPath: m_LocalScale.x
@@ -74,19 +74,20 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0667d2470c8fdb74ea432d7f257818e5, type: 2}
     m_RemovedComponents:
     - {fileID: 5538516537684050700, guid: 99332c2d0989bc24191fa43419300ec3, type: 3}
+    - {fileID: 6499510213369740031, guid: 99332c2d0989bc24191fa43419300ec3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2269287861277091420, guid: 99332c2d0989bc24191fa43419300ec3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3709454779304770630}
+      addedObject: {fileID: 3200879735352593299}
   m_SourcePrefab: {fileID: 100100000, guid: 99332c2d0989bc24191fa43419300ec3, type: 3}
 --- !u!1 &2605113372311206625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2269287861277091420, guid: 99332c2d0989bc24191fa43419300ec3, type: 3}
   m_PrefabInstance: {fileID: 4276477385097632957}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3709454779304770630
+--- !u!114 &3200879735352593299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,5 +99,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193c8a0703ed2cb449800060c43f4768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTank
-  enemyMovementSpeed: 1
-  playerDetectionRange: 5
+  enemySO: {fileID: 11400000, guid: c8ae35a5fa909bf429b60043db98592d, type: 2}

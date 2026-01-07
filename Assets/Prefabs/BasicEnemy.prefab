@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6096300481173336584}
   - component: {fileID: 2232432072207138977}
   - component: {fileID: 5639312633468962372}
-  - component: {fileID: 5538516537684050700}
+  - component: {fileID: 6499510213369740031}
   m_Layer: 8
-  m_Name: Enemy
+  m_Name: BasicEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &5538516537684050700
+--- !u!114 &6499510213369740031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,11 +95,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2269287861277091420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43afa668e459ea1419671a20f1653f04, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bef484a1b092ac4897371011a05c226, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  enemyMovementSpeed: 2
-  playerDetectionRange: 15
+  m_EditorClassIdentifier: Assembly-CSharp::BasicEnemy
+  enemySO: {fileID: 11400000, guid: dc8c87c9c8849a744a6cd9419ddcd980, type: 2}
 --- !u!1 &2805664429833455044
 GameObject:
   m_ObjectHideFlags: 0

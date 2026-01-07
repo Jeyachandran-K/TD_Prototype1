@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out Enemy enemy))
+        if (collision.gameObject.TryGetComponent(out BasicEnemy enemy))
         {
             playerState = PlayerState.Dead;
             OnPlayerDeath?.Invoke(this, EventArgs.Empty);

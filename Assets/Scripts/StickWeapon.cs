@@ -37,13 +37,13 @@ public class StickWeapon : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         
-        if (collision.gameObject.TryGetComponent(out Enemy enemy))
+        if (collision.gameObject.TryGetComponent(out BasicEnemy enemy))
         {
             if (attackType == AttackType.Normal) damageAmount = normalAttackDamage;
             if (attackType == AttackType.Heavy) damageAmount = heavyAttackDamageAmount;
             Vector3 hitDir = collision.contacts[0].normal * -1f;
             collision.rigidbody.AddForce(hitDir * hitForce, ForceMode.Impulse);
-            enemy.ReduceHealth(damageAmount);
+            enemy.TakeDamage(damageAmount);
         }
         if (collision.gameObject.TryGetComponent(out EnemyTank enemyTank))
         {
@@ -51,7 +51,7 @@ public class StickWeapon : MonoBehaviour
             if (attackType == AttackType.Heavy) damageAmount = heavyAttackDamageAmount;
             Vector3 hitDir = collision.contacts[0].normal * -1f;
             collision.rigidbody.AddForce(hitDir * hitForce, ForceMode.Impulse);
-            enemyTank.ReduceHealth(damageAmount);
+            // enemyTank.ReduceHealth(damageAmount);
         }
     }
     
