@@ -8,7 +8,7 @@ public class EnemyTank : MonoBehaviour
     private float health = 50f;
     
     [SerializeField] private float enemyMovementSpeed = 1f;
-    [SerializeField] private float playerDetectionRange = 30f;
+    [SerializeField] private float playerDetectionRange = 5f;
 
     private void Awake()
     {

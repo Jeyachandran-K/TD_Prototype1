@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   enemyMovementSpeed: 2
-  playerDetectionRange: 36
+  playerDetectionRange: 15
 --- !u!1 &2805664429833455044
 GameObject:
   m_ObjectHideFlags: 0

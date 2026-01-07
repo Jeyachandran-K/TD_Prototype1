@@ -6,11 +6,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform leftEnemySpawner;
     [SerializeField] private Transform rightEnemySpawner;
-    [SerializeField] private Transform enemyTargetTransform;
+    [SerializeField] private Transform[] waypoints;
     
     private readonly float spawnInterval = 3f;
     private float timer;
     private Vector3 direction;
+    
 
     private void Start()
     {
@@ -34,9 +35,8 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy(Transform spawnPoint,float rotation)
     {
         GameObject spawnedEnemy = Instantiate(enemyPrefab,spawnPoint.position, Quaternion.Euler(0f,rotation,0f));
-        Enemy enemy = spawnedEnemy.GetComponent<Enemy>();
-        Vector3 direction = (enemyTargetTransform.position - spawnedEnemy.transform.position).normalized;
-        enemy.SetDirection(direction);
+        Enemy enemy = spawnedEnemy.GetComponent <Enemy> ();
+        enemy.SetWaypoints(waypoints);
     }
-    
+
 }

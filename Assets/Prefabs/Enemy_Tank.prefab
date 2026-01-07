@@ -99,4 +99,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTank
   enemyMovementSpeed: 1
-  playerDetectionRange: 30
+  playerDetectionRange: 5

@@ -87,7 +87,6 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(cameraPivotTransform.position, cameraPivotTransform.forward, out RaycastHit hit,
                 weaponInteractionDistance, weaponLayer))
         {
-            Debug.Log("Player sees weapon");
             if (GameInputs.Instance.IsInteractPressed())
             {
                 hit.transform.SetParent(weaponHolderTransform);

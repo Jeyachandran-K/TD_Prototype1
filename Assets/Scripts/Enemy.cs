@@ -7,9 +7,13 @@ public class Enemy : MonoBehaviour
     private Rigidbody enemyRigidbody;
     private Vector3 direction;
     private float health = 20f;
+    private int currentIndex = 0;
+    private Transform[] waypoints;
     
     [SerializeField] private float enemyMovementSpeed = 2f;
-    [SerializeField] private float playerDetectionRange =30f;
+    [SerializeField] private float playerDetectionRange =5f;
+    private bool destinationReached;
+
 
     private void Awake()
     {
@@ -22,8 +26,20 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        DetectPlayerInRange();
-        MoveEnemy(direction);
+        if (!destinationReached)
+        {
+            MoveAlongWayPoints(waypoints);
+        }
+        else
+        {
+            DetectPlayerInRange();
+        }
+        
+    }
+
+    public void SetWaypoints(Transform[] wayPoints)
+    {
+        this.waypoints = wayPoints;
     }
     public void SetDirection(Vector3 direction)
     {
@@ -37,12 +53,8 @@ public class Enemy : MonoBehaviour
         float playerDistance  = Vector3.Distance(transform.position, playerTransform.position);
         if (playerDistance > playerDetectionRange) return;
         direction = (playerTransform.position - transform.position).normalized;
-        transform.LookAt(playerTransform);
-    }
-
-    private void MoveEnemy(Vector3 direction)
-    {
         enemyRigidbody.MovePosition(enemyRigidbody.position + direction * (enemyMovementSpeed * Time.fixedDeltaTime));
+        transform.LookAt(playerTransform);
     }
     
     public void DestroySelf()
@@ -54,6 +66,28 @@ public class Enemy : MonoBehaviour
     {
         health -= damageAmount;
         if(health <= 0) DestroySelf();
+    }
+
+    public void MoveAlongWayPoints(Transform[] wayPoints)
+    {
+        if(wayPoints.Length == 0) return;
+        if (currentIndex >= waypoints.Length)
+        {
+            destinationReached = true;
+            return;
+        }
+        Transform target= wayPoints[currentIndex];
+        direction = (target.position - transform.position).normalized;
+        transform.LookAt(target);
+        if (Vector3.Distance(transform.position,target.position)>1f)
+        {
+            enemyRigidbody.MovePosition(enemyRigidbody.position + direction * (enemyMovementSpeed * Time.fixedDeltaTime));
+        }
+        else
+        {
+            currentIndex++;
+        }
+        
     }
 
 }
