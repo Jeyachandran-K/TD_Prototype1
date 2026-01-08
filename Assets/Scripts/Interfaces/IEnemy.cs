@@ -8,5 +8,6 @@ namespace Interfaces
         public void DestroySelf();
         public void DetectPlayer();
         public void ChasePlayer();
+        public float GetEnemyHealthPercentage();
     }
 }

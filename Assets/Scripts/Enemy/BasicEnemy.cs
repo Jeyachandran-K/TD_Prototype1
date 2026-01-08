@@ -9,12 +9,14 @@ public class BasicEnemy : MonoBehaviour,IEnemy
     protected Transform playerTransform;
     protected Rigidbody enemyRigidbody;
     private float enemyHealth;
+    private float maxEnemyHealth;
 
     private void Awake()
     {
         playerTransform= FindAnyObjectByType<Player>().transform;
         enemyRigidbody =  GetComponent<Rigidbody>();
         enemyHealth = enemySO.health;
+        maxEnemyHealth = enemyHealth;
     }
 
     private void FixedUpdate()
@@ -55,5 +57,10 @@ public class BasicEnemy : MonoBehaviour,IEnemy
         Vector3 playerDirection = (playerTransform.position - transform.position).normalized;
         enemyRigidbody.MovePosition(enemyRigidbody.position+ playerDirection * (enemySO.enemyMovementSpeed * Time.fixedDeltaTime));
         transform.LookAt(playerTransform);
+    }
+
+    public float GetEnemyHealthPercentage()
+    {
+        return enemyHealth/maxEnemyHealth;
     }
 }
