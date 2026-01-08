@@ -1,4 +1,5 @@
 using System;
+using Interfaces;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour
     private float xRotation = 0f;
     private float yRotation = 0f;
     private readonly float weaponInteractionDistance = 3f;
+    private bool hasWeapon;
+    private Transform childTransform;
 
     public enum PlayerState
     {
@@ -48,9 +51,16 @@ public class Player : MonoBehaviour
     private void Update()
     {
         ReadInput();
-        WeaponPickup();
+        if (!hasWeapon)
+        {
+            WeaponPickup();    
+        }
+        else
+        {
+            WeaponDrop();
+        }
     }
-
+    
     private void LateUpdate()
     {
         HandleCameraMovement();
@@ -64,9 +74,8 @@ public class Player : MonoBehaviour
     private void HandleRotation()
     {
         Quaternion delta = Quaternion.Euler(0,yRotation,0);
-        playerRigidbody.MoveRotation(playerRigidbody.rotation * delta);
+        playerRigidbody.MoveRotation(playerRigidbody.rotation * delta );
     }
-
     
     private void HandleMovement()
     {
@@ -87,11 +96,29 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(cameraPivotTransform.position, cameraPivotTransform.forward, out RaycastHit hit,
                 weaponInteractionDistance, weaponLayer))
         {
-            if (GameInputs.Instance.IsInteractPressed())
+                if (GameInputs.Instance.IsInteractPressed())
+                {
+                    childTransform = hit.collider.transform;
+                    childTransform.SetParent(weaponHolderTransform);
+                    Debug.Log(childTransform.GetComponent<IPickable>().GetLocalPositionVector());
+                    childTransform.localPosition = childTransform.GetComponent<IPickable>().GetLocalPositionVector();
+                    childTransform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                    Debug.Log("Picked");
+                    
+                    hasWeapon = true;
+                }
+        }
+    }
+    private void WeaponDrop()
+    {
+        if (GameInputs.Instance.IsInteractPressed())
+        {
+            if (childTransform.parent)
             {
-                hit.transform.SetParent(weaponHolderTransform);
-                hit.transform.localPosition = Vector3.zero;
-                hit.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                childTransform.SetParent(null);
+                Debug.Log("dropped");
+                hasWeapon = false;
+                childTransform = null;
             }
         }
     }

@@ -2,7 +2,7 @@
 using Interfaces;
 using UnityEngine;
 
-public class StickWeapon : MonoBehaviour
+public class StickWeapon : MonoBehaviour,IPickable
 {
     public enum AttackType
     {
@@ -40,13 +40,23 @@ public class StickWeapon : MonoBehaviour
         
         if (collision.gameObject.TryGetComponent(out IEnemy enemy))
         {
-            if (attackType == AttackType.Normal) damageAmount = normalAttackDamage;
-            if (attackType == AttackType.Heavy) damageAmount = heavyAttackDamageAmount;
+            damageAmount=GetDamageAmount();
             Vector3 hitDir = collision.contacts[0].normal * -1f;
             collision.rigidbody.AddForce(hitDir * hitForce, ForceMode.Impulse);
             enemy.TakeDamage(damageAmount);
         }
         
     }
-    
+
+    private float GetDamageAmount()
+    {
+        if (attackType == AttackType.Normal) damageAmount = normalAttackDamage;
+        if (attackType == AttackType.Heavy) damageAmount = heavyAttackDamageAmount;
+        return damageAmount;
+    }
+
+    public Vector3 GetLocalPositionVector()
+    {
+        return new Vector3(0.3f, -0.25f, -0.5f);
+    }
 }

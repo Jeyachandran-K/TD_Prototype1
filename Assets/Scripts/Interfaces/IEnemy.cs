@@ -10,4 +10,8 @@ namespace Interfaces
         public void ChasePlayer();
         public float GetEnemyHealthPercentage();
     }
+    public interface IPickable
+    {
+        public Vector3 GetLocalPositionVector();
+    }
 }
