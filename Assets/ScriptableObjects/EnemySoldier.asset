@@ -15,4 +15,4 @@ MonoBehaviour:
   enemyPrefab: {fileID: 3849450506123183209, guid: 2e5d9b88eeee5e4478113212837aeb77, type: 3}
   health: 40
   playerDetectionRange: 20
-  enemyMovementSpeed: 2
+  enemyMovementSpeed: 3
